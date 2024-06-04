@@ -1,30 +1,130 @@
-# Trabajo Practico Especial - Simulacion de sitema
+ # Trabajo Practico Especial - Simulacion de sitema
+ 
+ ## Introduccion:
+ En el presente trabajo se aborda la problematica de maximizar el tiempo de vida del sistema de cajas registradoras de un supermercado. Para ello se simularan los siguientes casos de estudio:
+ 
+ - 1 operarios, 7 maquinas en uso y 3 repuestos
+ - 2 operarios, 7 maquinas en uso y 3 repuestos
+ - 1 operarios, 7 maquinas en uso y 4 repuestos
+ 
+ Se tomaran metricas de los resultados de estos casos (Esperanza, Desviacion Estandar) para su posterior analisis y asi determinar cual es el sistema que mejor se adapta a las necesidades del supermercado.
+ 
+ ## Algoritmo y descripción de las Variables:
+ 
+ ### Constantes y variables utilizadas dentro del algoritmo
+     N: Numero de cajas registradoras en servicio (arg)
+     S: Numero de cajas en reservas al inicio de la simulacion (arg)
+     OP: Numero de operarios al inicio de la simulaciòn (arg)
+     avaiable: Numero de cajas disponibles en un momento dado de la simulacion
+     avaiable_op: Operarios disponibles en un momento dado de la simulacion
+     to_repair: Cajas a reparar en un momento dado de la simulacion
+     break_moment: Lista de los tiempos en los que las cajas en servicio tendran defectos
+     repaird_moment: Momento en el que los operarios terminan de reparar las cajas defectuosas
+     sim_time: Denota el paso del tiempo dentro de la simulacion (return)
+     min_repair_position: posicion del tiempo de reparacion mas proximo (indice)
+     min_break_position:  posicion del tiempo de ruptura mas proximo (indice)
+ 
+ 
+ ## Explicación Algoritmo
+ Las ideas principales utilizadas para realizar la simulaciòn se basaron en lo provisto por el Capítulo 6 del libro Simulación (Segunda Edición ed.) de S.Ross (1999). Estas son:
+- Simulación mediante eventos discretos
+- Sistema de linea de espera con un servidor
+- Sistema de linea de espera con dos servidores en paralelo
 
-### Introduccion:
-En el presente trabajo se aborda la problematica de maximizar el tiempo de vida del sistema de cajas registradoras de un supermercado. Para ello se simularan los siguientes casos de estudio:
+El algoritmo sistema_rep_gen simula el tiempo de vida de un sistema de cajas registradoras en un supermercado, considerando el número de operarios y la disponibilidad de repuestos. La simulación evalúa los tiempos de falla y reparación de las cajas registradoras.
 
-- 1 operarios, 7 maquinas en uso y 3 repuestos
-- 2 operarios, 7 maquinas en uso y 3 repuestos
-- 1 operarios, 7 maquinas en uso y 4 repuestos
-
-Se tomaran metricas de los resultados de estos casos (Esperanza, Desviacion Estandar) para su posterior analisis y asi determinar cual es el sistema que mejor se adapta a las necesidades del supermercado.
-
-### Algoritmo y descripción de las Variables:
-
-#### Constantes y variables utilizadas dentro del algoritmo
-    N: Numero de cajas registradoras en servicio (arg)
-    S: Numero de cajas en reservas al inicio de la simulacion (arg)
-    OP: Numero de operarios al inicio de la simulaciòn (arg)
-    avaiable: Numero de cajas disponibles en un momento dado de la simulacion
-    avaiable_op: Operarios disponibles en un momento dado de la simulacion
-    to_repair: Cajas a reparar en un momento dado de la simulacion
-    break_moment: Lista de los tiempos en los que las cajas en servicio tendran defectos
-    repaird_moment: Momento en el que los operarios terminan de reparar las cajas defectuosas
-    sim_time: Denota el paso del tiempo dentro de la simulacion (return)
-    min_repair_position: posicion del tiempo de reparacion mas proximo (indice)
-    min_break_position:  posicion del tiempo de ruptura mas proximo (indice)
+#### Parámetros de Entrada
 
 
-#### Explicaciòn Algoritmo
-La ideas principales utilizadas para realizar la simulaciòn se basaron en lo provisto por el Capítulo 6 del libro Simulación (Segunda Edición ed.) de S.Ross (1999). Estas son:
-*
+    N (int): Número de máquinas en uso.
+    S (int): Número de repuestos disponibles.
+    OP (int): Número de operarios disponibles.
+
+#### Variables Iniciales
+
+    avaiable = N + S  # Cajas disponibles
+    avaiable_op = OP  # Operarios 
+
+#### Cajas a Reparar:
+
+    to_repair = 0  # Cajas a reparar
+
+#### Tiempos de Falla y Reparación:
+
+    break_moment = []  # Lista de los tiempos en los que las cajas tuvieron defectos
+    repaird_moment = [] # Momento en el que los operarios terminan de reparar las cajas
+
+#### Tiempo de Simulación:
+    sim_time = 0 # Denota el paso del tiempo dentro de la simulacion
+
+#### Inicialización de Tiempos de Reparación
+
+Para cada operario, se establece un tiempo de reparación infinito inicialmente:
+
+    for _ in range(OP):
+        repaird_moment.append(np.inf)
+
+#### Generación de Tiempos de Falla
+
+Se generan N tiempos exponenciales de falla para las máquinas en uso:
+
+    for _ in range(N):
+        break_moment.append(-math.log(random()))
+
+#### Bucle Principal de Simulación
+
+El bucle se ejecuta mientras el número de cajas disponibles sea mayor o igual a N:
+
+
+    while avaiable >= N:
+
+#### Determinación de la Próxima Acción:
+Encuentra las posiciones de la máquina con el menor tiempo de reparación y la máquina con el menor tiempo de falla:
+
+    min_repair_position = repaird_moment.index(min(repaird_moment))
+    min_break_position = break_moment.index(min(break_moment))
+
+#### Comparación de Tiempos:
+Si el próximo evento es una falla:
+
+    if break_moment[min_break_position] <= repaird_moment[min_repair_position]:
+
+Aumenta el conteo de máquinas a reparar.
+Reduce el número de cajas disponibles.
+Actualiza el tiempo de simulación y genera un nuevo tiempo de falla para la máquina.
+
+    to_repair += 1
+    avaiable -= 1
+    sim_time = break_moment[min_break_position]
+    break_moment[min_break_position] = sim_time - math.log(random())
+
+#### Si el próximo evento es una reparación:
+Disminuye el conteo de máquinas a reparar.
+Aumenta el número de cajas y operarios disponibles.
+Actualiza el tiempo de simulación y establece el tiempo de reparación de la máquina a infinito.
+
+    to_repair -= 1
+    avaiable += 1
+    avaiable_op += 1
+    sim_time = repaird_moment[min_repair_position]
+    repaird_moment[min_repair_position] = np.inf
+
+#### Asignación de Reparaciones:
+
+Si hay máquinas para reparar y operarios disponibles, asigna una reparación:
+
+    if avaiable_op > 0 and to_repair > 0:
+
+Encuentra la posición del tiempo de reparación máximo y asigna un nuevo tiempo de reparación.
+Reduce el número de operarios disponibles.
+
+        max_position = repaird_moment.index(max(repaird_moment))
+        repaird_moment[max_position] = sim_time - (1/8 * math.log(random()))
+        avaiable_op -= 1
+
+#### Retorno del Resultado
+
+El algoritmo finaliza y retorna el tiempo de simulación:
+    
+    return sim_time
+
