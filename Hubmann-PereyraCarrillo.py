@@ -83,6 +83,7 @@ for value in casos_de_estudio:
     plt.xlabel('Tiempo de Simulación')
     plt.ylabel('Frecuencia')
     plt.grid(True, which='both', linestyle='--', linewidth=0.5)
+    plt.xticks(range(0, 33, 2))
     plt.show()
 
     # This will graph the esperanza and desviación estandar
