@@ -128,3 +128,60 @@ El algoritmo finaliza y retorna el tiempo de simulación:
     
     return sim_time
 
+
+### Resultados: 
+#### Histogramas de Resultados
+
+A continuación, se presentan los histogramas de los resultados de 10,000 simulaciones para cada caso de estudio:
+* Caso de Estudio 1: 1 Operario, 7 Máquinas en Uso y 3 Repuestos
+
+* Caso de Estudio 2: 2 Operarios, 7 Máquinas en Uso y 3 Repuestos
+
+* Caso de Estudio 3: 1 Operario, 7 Máquinas en Uso y 4 Repuestos
+
+#### Comparación de Métricas
+
+Se presentan las métricas obtenidas (esperanza, varianza, desviación estándar) para cada caso de estudio:
+* Caso de Estudio 1: 1 Operario, 7 Máquinas en Uso y 3 Repuestos
+
+    Esperanza: 
+    Varianza: 
+    Desviación Estándar: 
+
+* Caso de Estudio 2: 2 Operarios, 7 Máquinas en Uso y 3 Repuestos
+
+    Esperanza: 
+    Varianza:
+    Desviación Estándar: 
+
+* Caso de Estudio 3: 1 Operario, 7 Máquinas en Uso y 4 Repuestos
+
+    Esperanza: 
+    Varianza: 
+    Desviación Estándar: 
+
+#### Análisis de los Resultados
+
+Al comparar los tres casos de estudio, se observan las siguientes características sobresalientes:
+
+    Caso de Estudio 1:
+        Tiempo de vida promedio del sistema (esperanza) es el más bajo.
+        Varianza y desviación estándar son relativamente bajas, lo que indica menor variabilidad en los tiempos de vida.
+
+    Caso de Estudio 2:
+        Tiempo de vida promedio del sistema (esperanza) es el más alto.
+        Varianza y desviación estándar son significativamente altas, lo que indica una mayor variabilidad en los tiempos de vida.
+
+    Caso de Estudio 3:
+        Tiempo de vida promedio del sistema (esperanza) es intermedio.
+        Varianza y desviación estándar también son intermedias, indicando una variabilidad moderada en los tiempos de vida.
+
+
+El análisis de los resultados muestra que, aunque el sistema con dos operarios y tres repuestos tiene el mayor tiempo de vida promedio, también presenta la mayor variabilidad. Esto podría traducirse en una mayor incertidumbre respecto al tiempo de vida del sistema. Por otro lado, el sistema con un operario y cuatro repuestos ofrece una mejora significativa en el tiempo de vida promedio en comparación con un solo operario y tres repuestos, con una variabilidad moderada.
+
+La elección del sistema óptimo dependerá de las prioridades del supermercado entre maximizar el tiempo de vida del sistema y minimizar la variabilidad e incertidumbre.
+Gráfico de Comparación de Medias y Desviaciones Estándar
+
+A continuación se presenta un gráfico comparativo de las medias y desviaciones estándar de los tiempos de vida del sistema para los tres casos de estudio:
+
+#### Gráfico de Medias y Desviaciones Estándar
