@@ -38,7 +38,8 @@ def sistema_rep_gen(N, S, OP):
             sim_time = repaird_moment[min_repair_position]
             repaird_moment[min_repair_position] = np.inf
 
-        if avaiable_op > 0 and to_repair > 0:
+        if avaiable_op > 0 and (to_repair > OP-avaiable_op):
+
             # Hay maquinas para reparar y el operario esta libre
             max_position = repaird_moment.index(max(repaird_moment))
             repaird_moment[max_position] = sim_time - (1/8 * math.log(random()))
