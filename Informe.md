@@ -12,26 +12,28 @@
  ## Algoritmo y descripción de las Variables:
  
  ### Constantes y variables utilizadas dentro del algoritmo
-     N: Numero de cajas registradoras en servicio (arg)
-     S: Numero de cajas en reservas al inicio de la simulacion (arg)
-     OP: Numero de operarios al inicio de la simulaciòn (arg)
-     avaiable: Numero de cajas disponibles en un momento dado de la simulacion
-     avaiable_op: Operarios disponibles en un momento dado de la simulacion
-     to_repair: Cajas a reparar en un momento dado de la simulacion
-     break_moment: Lista de los tiempos en los que las cajas en servicio tendran defectos
-     repaird_moment: Momento en el que los operarios terminan de reparar las cajas defectuosas
-     sim_time: Denota el paso del tiempo dentro de la simulacion (return)
-     min_repair_position: posicion del tiempo de reparacion mas proximo (indice)
-     min_break_position:  posicion del tiempo de ruptura mas proximo (indice)
+- **N**: *Numero de cajas registradoras en servicio*
+- **S:** *Numero de cajas en reservas al inicio de la simulacion*
+- **OP:** *Numero de operarios al inicio de la simulaciòn*
+- **avaiable**: *Numero de cajas disponibles en un momento dado de la simulacion*
+- **avaiable_op**: *Operarios disponibles en un momento dado de la simulacion*
+- **to_repair**: *Cajas a reparar en un momento dado de la simulacion*
+- **break_moment**: *Lista de los tiempos en los que las cajas en servicio tendran defectos*
+- **repaird_moment**: *Momento en el que los operarios terminan de reparar las cajas defectuosas*
+- **sim_time**: *Denota el paso del tiempo dentro de la simulacion*
+- **min_repair_position**: *posicion del tiempo de reparacion mas proximo*
+- **min_break_position**: * posicion del tiempo de ruptura mas proximo*
  
  
  ## Explicación Algoritmo
- Las ideas principales utilizadas para realizar la simulaciòn se basaron en lo provisto por el Capítulo 6 del libro Simulación (Segunda Edición ed.) de S.Ross (1999). Estas son:
+ Las ideas principales utilizadas para realizar la simulación se basaron en lo provisto por el Capítulo 6 del libro Simulación (Segunda Edición ed.) de S.Ross (1999).
+ 
 - Simulación mediante eventos discretos
 - Sistema de linea de espera con un servidor
 - Sistema de linea de espera con dos servidores en paralelo
 
-El algoritmo sistema_rep_gen simula el tiempo de vida de un sistema de cajas registradoras en un supermercado, considerando el número de operarios y la disponibilidad de repuestos. La simulación evalúa los tiempos de falla y reparación de las cajas registradoras.
+El algoritmo **sistema_rep_gen** simula el tiempo de vida de un sistema de cajas registradoras en un supermercado, considerando el número de operarios y la disponibilidad de repuestos.
+Consiste en ir avanzando en eventos discretos de 2 tipos (ocurrió un desperfecto o se termino de reparar una caja registradora). En función de cual es la categoria del proximo evento se actualizan los valores de las variables de la simulación hasta que se cumplen las condiciones de falla del sistema y devolvemos el valor *sim_time* el cual representa el tiempo total que duró la simulación
 
 #### Parámetros de Entrada
 
@@ -56,7 +58,6 @@ El algoritmo sistema_rep_gen simula el tiempo de vida de un sistema de cajas reg
 
 #### Tiempo de Simulación:
     sim_time = 0 # Denota el paso del tiempo dentro de la simulacion
-
 #### Inicialización de Tiempos de Reparación
 
 Para cada operario, se establece un tiempo de reparación infinito inicialmente:
@@ -74,7 +75,6 @@ Se generan N tiempos exponenciales de falla para las máquinas en uso:
 #### Bucle Principal de Simulación
 
 El bucle se ejecuta mientras el número de cajas disponibles sea mayor o igual a N:
-
 
     while avaiable >= N:
 
