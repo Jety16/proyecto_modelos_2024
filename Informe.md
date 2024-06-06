@@ -1,7 +1,7 @@
- # Trabajo Practico Especial - Simulacion de sitema
+ # Trabajo Practico Especial - Simulación de sistema
  
- ## Introduccion:
- En el presente trabajo se aborda la problematica de maximizar el tiempo de vida del sistema de cajas registradoras de un supermercado. Para ello se simularan los siguientes casos de estudio:
+ ## Introducción:
+ En el presente trabajo se aborda la problemática de maximizar el tiempo de vida del sistema de cajas registradoras de un supermercado. Para ello se simularan los siguientes casos de estudio:
  
  - 1 operarios, 7 maquinas en uso y 3 repuestos
  - 2 operarios, 7 maquinas en uso y 3 repuestos
@@ -142,23 +142,23 @@ A continuación, se presentan los histogramas de los resultados de 10,000 simula
 #### Comparación de Métricas
 
 Se presentan las métricas obtenidas (esperanza, varianza, desviación estándar) para cada caso de estudio:
-* Caso de Estudio 1: 1 Operario, 7 Máquinas en Uso y 3 Repuestos
+##### Caso de Estudio 1: 1 Operario, 7 Máquinas en Uso y 3 Repuestos
+![[study_case_1.png]]
+    Esperanza: 1.65
+    Varianza: 2.04
+    Desviación Estándar:  1.43
 
-    Esperanza: 
-    Varianza: 
-    Desviación Estándar: 
+##### Caso de Estudio 2: 2 Operarios, 7 Máquinas en Uso y 3 Repuestos
+![[study_case_2.png]]
+    Esperanza:  4.51
+    Varianza: 19.60
+    Desviación Estándar: 4.43
 
-* Caso de Estudio 2: 2 Operarios, 7 Máquinas en Uso y 3 Repuestos
-
-    Esperanza: 
-    Varianza:
-    Desviación Estándar: 
-
-* Caso de Estudio 3: 1 Operario, 7 Máquinas en Uso y 4 Repuestos
-
-    Esperanza: 
-    Varianza: 
-    Desviación Estándar: 
+##### Caso de Estudio 3: 1 Operario, 7 Máquinas en Uso y 4 Repuestos
+![[study_case_3.png]]
+    Esperanza: 2.61
+    Varianza: 5.13
+    Desviación Estándar: 2.26
 
 #### Análisis de los Resultados
 
@@ -180,8 +180,7 @@ Al comparar los tres casos de estudio, se observan las siguientes característic
 El análisis de los resultados muestra que, aunque el sistema con dos operarios y tres repuestos tiene el mayor tiempo de vida promedio, también presenta la mayor variabilidad. Esto podría traducirse en una mayor incertidumbre respecto al tiempo de vida del sistema. Por otro lado, el sistema con un operario y cuatro repuestos ofrece una mejora significativa en el tiempo de vida promedio en comparación con un solo operario y tres repuestos, con una variabilidad moderada.
 
 La elección del sistema óptimo dependerá de las prioridades del supermercado entre maximizar el tiempo de vida del sistema y minimizar la variabilidad e incertidumbre.
-Gráfico de Comparación de Medias y Desviaciones Estándar
-
 A continuación se presenta un gráfico comparativo de las medias y desviaciones estándar de los tiempos de vida del sistema para los tres casos de estudio:
 
 #### Gráfico de Medias y Desviaciones Estándar
+![[media_desviation_graph.png]]
