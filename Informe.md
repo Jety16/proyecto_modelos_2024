@@ -133,6 +133,7 @@ El algoritmo finaliza y retorna el tiempo de simulación:
 #### Histogramas de Resultados
 
 A continuación, se presentan los histogramas de los resultados de 10,000 simulaciones para cada caso de estudio:
+
 * Caso de Estudio 1: 1 Operario, 7 Máquinas en Uso y 3 Repuestos
 
 * Caso de Estudio 2: 2 Operarios, 7 Máquinas en Uso y 3 Repuestos
@@ -160,6 +161,10 @@ Se presentan las métricas obtenidas (esperanza, varianza, desviación estándar
     Varianza: 5.13
     Desviación Estándar: 2.26
 
+A continuación se presenta un gráfico comparativo de las medias y desviaciones estándar de los tiempos de vida y desviación estándar del sistema para los tres casos de estudio:
+
+#### Gráfico de Medias y Desviaciones Estándar
+![[media_desviation_graph.png]]
 #### Análisis de los Resultados
 
 Al comparar los tres casos de estudio, se observan las siguientes características sobresalientes:
@@ -176,11 +181,8 @@ Al comparar los tres casos de estudio, se observan las siguientes característic
         Tiempo de vida promedio del sistema (esperanza) es intermedio.
         Varianza y desviación estándar también son intermedias, indicando una variabilidad moderada en los tiempos de vida.
 
+### Conclusión
 
 El análisis de los resultados muestra que, aunque el sistema con dos operarios y tres repuestos tiene el mayor tiempo de vida promedio, también presenta la mayor variabilidad. Esto podría traducirse en una mayor incertidumbre respecto al tiempo de vida del sistema. Por otro lado, el sistema con un operario y cuatro repuestos ofrece una mejora significativa en el tiempo de vida promedio en comparación con un solo operario y tres repuestos, con una variabilidad moderada.
 
 La elección del sistema óptimo dependerá de las prioridades del supermercado entre maximizar el tiempo de vida del sistema y minimizar la variabilidad e incertidumbre.
-A continuación se presenta un gráfico comparativo de las medias y desviaciones estándar de los tiempos de vida del sistema para los tres casos de estudio:
-
-#### Gráfico de Medias y Desviaciones Estándar
-![[media_desviation_graph.png]]
