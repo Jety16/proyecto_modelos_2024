@@ -73,18 +73,20 @@ def statics(N,S,OP):
 
 casos_de_estudio = [[7,3,1], [7,3,2], [7,4,1]]
 results = []    # used for making the graph of the esperanza and desviación estandar
-
+xticks_values = [(16,1),(36,4),(20,2)]
+i = 0
 for value in casos_de_estudio:
     esperanza, desviacion_estandar, sim_result = statics(*value)
     # This will graph the results of each simualtion
     plt.figure(figsize=(10, 6))
     plt.hist(sim_result, bins=100, alpha=0.75, color='skyblue', edgecolor='black')
-    plt.title(f'Histograma de Resultados - OP: {value[2]}, S: {value[1]}')
+    plt.title(f'Histograma de Resultados - N: {value[0]}, OP: {value[2]}, S: {value[1]}')
     plt.xlabel('Tiempo de Simulación')
     plt.ylabel('Frecuencia')
     plt.grid(True, which='both', linestyle='--', linewidth=0.5)
-    plt.xticks(range(0, 33, 2))
+    plt.xticks(range(0, xticks_values[i][0], xticks_values[i][1]))
     plt.show()
+    i +=1
 
     # This will graph the esperanza and desviación estandar
     results.append({'N': value[0], 'S': value[1], 'OP': value[2], 'Media': esperanza, 'Desviación Estándar': desviacion_estandar})
