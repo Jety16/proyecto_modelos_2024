@@ -38,8 +38,7 @@ def sistema_rep_gen(N, S, OP):
             sim_time = repaird_moment[min_repair_position]
             repaird_moment[min_repair_position] = np.inf
 
-        if avaiable_op > 0 and (to_repair > OP-avaiable_op):
-
+        if avaiable_op > 0 and (to_repair > OP - avaiable_op):
             # Hay maquinas para reparar y el operario esta libre
             max_position = repaird_moment.index(max(repaird_moment))
             repaird_moment[max_position] = sim_time - (1/8 * math.log(random()))
@@ -65,24 +64,24 @@ def statics(N,S,OP):
     esperanza = sum/ n_sim
     varianza = (sum_cuadrados/n_sim - esperanza**2)
     print(F"\nCaso de estudio con {OP} operarios, {N} maquinas en uso y {S} repuestos")
-    print(f"Esperanza: {esperanza}")
-    print(f"Varianza: {varianza}")
-    print(f"Desviacion estandar: {np.sqrt(varianza)}")
+    print(f"Esperanza: {esperanza} meses")
+    print(f"Varianza: {varianza} meses")
+    print(f"Desviacion estandar: {np.sqrt(varianza)} meses")
     print('------------------------')
     return esperanza, np.sqrt(varianza), results
 
 
 casos_de_estudio = [[7,3,1], [7,3,2], [7,4,1]]
 results = []    # used for making the graph of the esperanza and desviación estandar
-xticks_values = [(16,1),(36,4),(20,2)]
+xticks_values = [(16,1),(36,2),(24,1)]
 i = 0
 for value in casos_de_estudio:
     esperanza, desviacion_estandar, sim_result = statics(*value)
     # This will graph the results of each simualtion
     plt.figure(figsize=(10, 6))
-    plt.hist(sim_result, bins=100, alpha=0.75, color='skyblue', edgecolor='black')
-    plt.title(f'Histograma de Resultados - N: {value[0]}, OP: {value[2]}, S: {value[1]}')
-    plt.xlabel('Tiempo de Simulación')
+    plt.hist(sim_result, bins=150, alpha=0.75, color='skyblue', edgecolor='black')
+    plt.title(f'Histograma de Resultados con - N: {value[0]}, OP: {value[2]}, S: {value[1]}')
+    plt.xlabel('Tiempo de Falla del Sistema en Meses')
     plt.ylabel('Frecuencia')
     plt.grid(True, which='both', linestyle='--', linewidth=0.5)
     plt.xticks(range(0, xticks_values[i][0], xticks_values[i][1]))
@@ -103,14 +102,14 @@ fig, ax = plt.subplots(2, 1, figsize=(12, 10))
 # Media plot
 df.plot(kind='bar', x='Label', y='Media', ax=ax[0], legend=False, color='skyblue')
 ax[0].set_title('Media de cada simulación')
-ax[0].set_ylabel('Media')
+ax[0].set_ylabel('Tiempo de Falla del Sistema en Meses')
 ax[0].set_xlabel('Casos de estudio: Operarios (OP) y Repuestos (S)')
 ax[0].tick_params(axis='x', rotation=0)
 
 # Desviación Estándar plot
 df.plot(kind='bar', x='Label', y='Desviación Estándar', ax=ax[1], legend=False, color='orange')
 ax[1].set_title('Desviación Estándar de cada simulación')
-ax[1].set_ylabel('Desviación Estándar')
+ax[1].set_ylabel('Tiempo de Falla del Sistema en Meses')
 ax[1].set_xlabel('Casos de estudio: Operarios (OP) y Repuestos (S)')
 ax[1].tick_params(axis='x', rotation=0)
 

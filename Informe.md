@@ -1,69 +1,69 @@
- # Trabajo Practico Especial - Simulación de sistema
- 
- ## Introducción:
- En el presente trabajo se aborda la problemática de maximizar el tiempo de vida del sistema de cajas registradoras de un supermercado. Para ello se simularan los siguientes casos de estudio:
- 
- - 1 operarios, 7 maquinas en uso y 3 repuestos
- - 2 operarios, 7 maquinas en uso y 3 repuestos
- - 1 operarios, 7 maquinas en uso y 4 repuestos
- 
- Se tomaran metricas de los resultados de estos casos (Esperanza, Desviacion Estandar) para su posterior analisis y asi determinar cual es el sistema que mejor se adapta a las necesidades del supermercado.
- 
- ## Algoritmo y descripción de las Variables:
- 
- ### Constantes y variables utilizadas dentro del algoritmo
-- **N**: *Numero de cajas registradoras en servicio*
-- **S:** *Numero de cajas en reservas al inicio de la simulacion*
-- **OP:** *Numero de operarios al inicio de la simulaciòn*
-- **avaiable**: *Numero de cajas disponibles en un momento dado de la simulacion*
-- **avaiable_op**: *Operarios disponibles en un momento dado de la simulacion*
-- **to_repair**: *Cajas a reparar en un momento dado de la simulacion*
-- **break_moment**: *Lista de los tiempos en los que las cajas en servicio tendran defectos*
-- **repaird_moment**: *Momento en el que los operarios terminan de reparar las cajas defectuosas*
-- **sim_time**: *Denota el paso del tiempo dentro de la simulacion*
-- **min_repair_position**: *posicion del tiempo de reparacion mas proximo*
-- **min_break_position**: * posicion del tiempo de ruptura mas proximo*
- 
- 
- ## Explicación Algoritmo
- Las ideas principales utilizadas para realizar la simulación se basaron en lo provisto por el Capítulo 6 del libro Simulación (Segunda Edición ed.) de S.Ross (1999).
- 
+# Trabajo Práctico Especial - Simulación de sistema
+
+## Introducción:
+En el presente trabajo se aborda la problemática de maximizar el tiempo de vida del sistema de cajas registradoras de un supermercado. Para ello se simularán los siguientes casos de estudio:
+
+- 1 operario, 7 máquinas en uso y 3 repuestos
+- 2 operarios, 7 máquinas en uso y 3 repuestos
+- 1 operario, 7 máquinas en uso y 4 repuestos
+
+Se tomarán métricas de los resultados de estos casos (Esperanza, Desviación Estándar) para su posterior análisis y así determinar cuál es el sistema que mejor se adapta a las necesidades del supermercado.
+
+## Algoritmo y descripción de las Variables:
+
+### Constantes y variables utilizadas dentro del algoritmo
+- **N**: *Número de cajas registradoras en servicio*
+- **S**: *Número de cajas en reserva al inicio de la simulación*
+- **OP**: *Número de operarios al inicio de la simulación*
+- **available**: *Número de cajas disponibles en un momento dado de la simulación*
+- **available_op**: *Operarios disponibles en un momento dado de la simulación*
+- **to_repair**: *Cajas a reparar en un momento dado de la simulación*
+- **break_moment**: *Lista de los tiempos en los que las cajas en servicio tendrán defectos*
+- **repaired_moment**: *Momento en el que los operarios terminan de reparar las cajas defectuosas*
+- **sim_time**: *Denota el paso del tiempo dentro de la simulación*
+- **min_repair_position**: *Posición del tiempo de reparación más próximo*
+- **min_break_position**: *Posición del tiempo de ruptura más próximo*
+
+## Explicación del Algoritmo
+Las ideas principales utilizadas para realizar la simulación se basaron en lo provisto por el Capítulo 6 del libro "Simulación" (Segunda Edición) de S. Ross (1999).
+
 - Simulación mediante eventos discretos
-- Sistema de linea de espera con un servidor
-- Sistema de linea de espera con dos servidores en paralelo
+- Sistema de línea de espera con un servidor
+- Sistema de línea de espera con dos servidores en paralelo
 
 El algoritmo **sistema_rep_gen** simula el tiempo de vida de un sistema de cajas registradoras en un supermercado, considerando el número de operarios y la disponibilidad de repuestos.
-Consiste en ir avanzando en eventos discretos de 2 tipos (ocurrió un desperfecto o se termino de reparar una caja registradora). En función de cual es la categoria del proximo evento se actualizan los valores de las variables de la simulación hasta que se cumplen las condiciones de falla del sistema y devolvemos el valor *sim_time* el cual representa el tiempo total que duró la simulación
+Consiste en avanzar en eventos discretos de 2 tipos (ocurrió un desperfecto o se terminó de reparar una caja registradora). En función de cuál es la categoría del próximo evento, se actualizan los valores de las variables de la simulación hasta que se cumplen las condiciones de falla del sistema y devolvemos el valor *sim_time*, el cual representa el tiempo total que duró la simulación.
 
-#### Parámetros de Entrada
+### Parámetros de Entrada
 
+- N (int): Número de máquinas en uso.
+- S (int): Número de repuestos disponibles.
+- OP (int): Número de operarios disponibles.
 
-    N (int): Número de máquinas en uso.
-    S (int): Número de repuestos disponibles.
-    OP (int): Número de operarios disponibles.
+### Variables Iniciales
 
-#### Variables Iniciales
+- **available = N + S**: Cajas disponibles.
+- **available_op = OP**: Operarios.
 
-    avaiable = N + S  # Cajas disponibles
-    avaiable_op = OP  # Operarios 
+### Cajas a Reparar:
 
-#### Cajas a Reparar:
+- **to_repair = 0**: Cajas a reparar.
 
-    to_repair = 0  # Cajas a reparar
+### Tiempos de Falla y Reparación:
 
-#### Tiempos de Falla y Reparación:
+- **break_moment = []**: Lista de los tiempos en los que las cajas tuvieron defectos.
+- **repaired_moment = []**: Momento en el que los operarios terminan de reparar las cajas.
 
-    break_moment = []  # Lista de los tiempos en los que las cajas tuvieron defectos
-    repaird_moment = [] # Momento en el que los operarios terminan de reparar las cajas
+### Tiempo de Simulación:
 
-#### Tiempo de Simulación:
-    sim_time = 0 # Denota el paso del tiempo dentro de la simulacion
-#### Inicialización de Tiempos de Reparación
+- **sim_time = 0**: Denota el paso del tiempo dentro de la simulación.
+
+### Inicialización de Tiempos de Reparación
 
 Para cada operario, se establece un tiempo de reparación infinito inicialmente:
 
     for _ in range(OP):
-        repaird_moment.append(np.inf)
+        repaired_moment.append(np.inf)
 
 #### Generación de Tiempos de Falla
 
@@ -76,110 +76,102 @@ Se generan N tiempos exponenciales de falla para las máquinas en uso:
 
 El bucle se ejecuta mientras el número de cajas disponibles sea mayor o igual a N:
 
-    while avaiable >= N:
+    while available >= N:
 
 #### Determinación de la Próxima Acción:
-Encuentra las posiciones de la máquina con el menor tiempo de reparación y la máquina con el menor tiempo de falla:
+Obtenemos los tiempos más próximos de cada tipo de evento, se terminó de reparar una máquina o una máquina sufrió un desperfecto. Luego se comparan esos tiempos para decidir cuál de los dos es el próximo evento a ocurrir en la simulación.
 
-    min_repair_position = repaird_moment.index(min(repaird_moment))
+    min_repair_position = repaired_moment.index(min(repaired_moment))
     min_break_position = break_moment.index(min(break_moment))
 
-#### Comparación de Tiempos:
-Si el próximo evento es una falla:
+    if break_moment[min_break_position] <= repaired_moment[min_repair_position]:
 
-    if break_moment[min_break_position] <= repaird_moment[min_repair_position]:
-
+#### Si el próximo evento es una falla:
 Aumenta el conteo de máquinas a reparar.
 Reduce el número de cajas disponibles.
-Actualiza el tiempo de simulación y genera un nuevo tiempo de falla para la máquina.
+Actualiza el tiempo de simulación y genera un nuevo tiempo de falla para la máquina que se comenzó a utilizar para reemplazar a la que se averió.
 
     to_repair += 1
-    avaiable -= 1
+    available -= 1
     sim_time = break_moment[min_break_position]
     break_moment[min_break_position] = sim_time - math.log(random())
 
 #### Si el próximo evento es una reparación:
 Disminuye el conteo de máquinas a reparar.
 Aumenta el número de cajas y operarios disponibles.
-Actualiza el tiempo de simulación y establece el tiempo de reparación de la máquina a infinito.
+Actualiza el tiempo de simulación y establece el tiempo hasta que ese operario termine de reparar la próxima máquina a infinito.
 
     to_repair -= 1
-    avaiable += 1
-    avaiable_op += 1
-    sim_time = repaird_moment[min_repair_position]
-    repaird_moment[min_repair_position] = np.inf
+    available += 1
+    available_op += 1
+    sim_time = repaired_moment[min_repair_position]
+    repaired_moment[min_repair_position] = np.inf
 
 #### Asignación de Reparaciones:
 
-Si hay máquinas para reparar y operarios disponibles, asigna una reparación:
+Revisamos si hay operarios disponibles y si el número de máquinas a reparar es mayor que el número de operarios reparando una máquina en el momento.
 
-    if avaiable_op > 0 and to_repair > 0:
+    if available_op > 0 and (to_repair > OP - available_op):
 
-Encuentra la posición del tiempo de reparación máximo y asigna un nuevo tiempo de reparación.
-Reduce el número de operarios disponibles.
+Si se cumple esta condición tomamos un operario que esté libre (el que tenga el mayor tiempo de reparación ya que este será infinito si no está reparando ninguna máquina) y le asignamos un nuevo tiempo de reparación, reduciendo el número de operarios disponibles.
 
-        max_position = repaird_moment.index(max(repaird_moment))
-        repaird_moment[max_position] = sim_time - (1/8 * math.log(random()))
-        avaiable_op -= 1
+        max_position = repaired_moment.index(max(repaired_moment))
+        repaired_moment[max_position] = sim_time - (1/8 * math.log(random()))
+        available_op -= 1
 
 #### Retorno del Resultado
 
-El algoritmo finaliza y retorna el tiempo de simulación:
-    
+El algoritmo finaliza cuando el número de cajas registradoras disponibles es menor que N y retorna el tiempo de simulación (tiempo en el que el supermercado dejó de ser operativo):
+
     return sim_time
 
+### Resultados:
 
-### Resultados: 
-#### Histogramas de Resultados
+A continuación, se presentan los resultados del tiempo hasta que el supermercado deja de ser operativo en meses de 10,000 simulaciones para cada caso de estudio.
+Las métricas obtenidas son la esperanza, varianza y desviación estándar para cada caso de estudio y un gráfico con los resultados de las distintas simulaciones:
 
-A continuación, se presentan los histogramas de los resultados de 10,000 simulaciones para cada caso de estudio:
-
-* Caso de Estudio 1: 1 Operario, 7 Máquinas en Uso y 3 Repuestos
-
-* Caso de Estudio 2: 2 Operarios, 7 Máquinas en Uso y 3 Repuestos
-
-* Caso de Estudio 3: 1 Operario, 7 Máquinas en Uso y 4 Repuestos
-
-#### Comparación de Métricas
-
-Se presentan las métricas obtenidas (esperanza, varianza, desviación estándar) para cada caso de estudio:
 ##### Caso de Estudio 1: 1 Operario, 7 Máquinas en Uso y 3 Repuestos
-![[study_case_1.png]]
-    Esperanza: 1.65
-    Varianza: 2.04
-    Desviación Estándar:  1.43
+![](study_case_1.png)
+   - Esperanza: 1.65 meses
+   - Varianza: 2.04 meses
+   - Desviación Estándar: 1.43 meses
 
 ##### Caso de Estudio 2: 2 Operarios, 7 Máquinas en Uso y 3 Repuestos
-![[study_case_2.png]]
-    Esperanza:  4.51
-    Varianza: 19.60
-    Desviación Estándar: 4.43
+![](study_case_2.png)
+   - Esperanza: 3.35 meses
+   - Varianza: 10.11 meses
+   - Desviación Estándar: 3.18 meses
 
 ##### Caso de Estudio 3: 1 Operario, 7 Máquinas en Uso y 4 Repuestos
-![[study_case_3.png]]
-    Esperanza: 2.61
-    Varianza: 5.13
-    Desviación Estándar: 2.26
+![](study_case_3.png)
+   - Esperanza: 2.60 meses
+   - Varianza: 5.06 meses
+   - Desviación Estándar: 2.25 meses
 
-A continuación se presenta un gráfico comparativo de las medias y desviaciones estándar de los tiempos de vida y desviación estándar del sistema para los tres casos de estudio:
+A continuación se presenta un gráfico comparativo de las medias y desviaciones estándar de los tiempos de vida del sistema para los tres casos de estudio:
 
 #### Gráfico de Medias y Desviaciones Estándar
-![[media_desviation_graph.png]]
+![](media_desviation_graph.png)
+
 #### Análisis de los Resultados
 
 Al comparar los tres casos de estudio, se observan las siguientes características sobresalientes:
 
-    Caso de Estudio 1:
-        Tiempo de vida promedio del sistema (esperanza) es el más bajo.
-        Varianza y desviación estándar son relativamente bajas, lo que indica menor variabilidad en los tiempos de vida.
+- Características Generales:
+  - Presentan valores extremos muy alejados de la esperanza.
+  - Tienen una alta frecuencia en los valores más bajos del gráfico.
 
-    Caso de Estudio 2:
-        Tiempo de vida promedio del sistema (esperanza) es el más alto.
-        Varianza y desviación estándar son significativamente altas, lo que indica una mayor variabilidad en los tiempos de vida.
+- Caso de Estudio 1:
+    - El tiempo de vida promedio del sistema (esperanza) es el más bajo.
+    - Su varianza y desviación estándar son relativamente bajas, lo que indica menor variabilidad en los tiempos de vida.
 
-    Caso de Estudio 3:
-        Tiempo de vida promedio del sistema (esperanza) es intermedio.
-        Varianza y desviación estándar también son intermedias, indicando una variabilidad moderada en los tiempos de vida.
+- Caso de Estudio 2:
+    - El tiempo de vida promedio del sistema (esperanza) es el más alto.
+    - La varianza y desviación estándar son significativamente altas, lo que indica una mayor variabilidad en los tiempos de vida.
+
+- Caso de Estudio 3:
+    - El tiempo de vida promedio del sistema (esperanza) es intermedio.
+    - La varianza y desviación estándar también son intermedias, indicando una variabilidad moderada en los tiempos de vida.
 
 ### Conclusión
 
