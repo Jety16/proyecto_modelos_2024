@@ -31,19 +31,21 @@ Las ideas principales utilizadas para realizar la simulación se basaron en lo p
 - Sistema de línea de espera con un servidor
 - Sistema de línea de espera con dos servidores en paralelo
 
-El algoritmo **sistema_rep_gen** simula el tiempo de vida de un sistema de cajas registradoras en un supermercado, considerando el número de operarios y la disponibilidad de repuestos.
-Consiste en avanzar en eventos discretos de 2 tipos (ocurrió un desperfecto o se terminó de reparar una caja registradora). En función de cuál es la categoría del próximo evento, se actualizan los valores de las variables de la simulación hasta que se cumplen las condiciones de falla del sistema y devolvemos el valor *sim_time*, el cual representa el tiempo total que duró la simulación.
+El algoritmo **sistema_rep_gen** simula el tiempo de vida de un sistema de cajas registradoras en un supermercado, considerando el numero de cajas registradoras en servicio(**N**),
+cuantos operarios se tienen contratados(**OP**) y la cantidad de repuestos (**S**).
+
+La idea general del algoritmo consiste en simular los tiempos en que ocurren 2 tipos de eventos discretos (una caja registradora sufrio un desperfecto ó se terminó de reparar). En función de cuál es la categoría del próximo evento, se actualizan los valores de las variables de la simulación hasta que se cumplen las condiciones de falla del sistema (que se tengan menos de N cajas disponibles en un momento dado) y devolvemos el valor de *sim_time*, el cual representa el momento en el cual el supermercado dejo de ser operativo.
 
 ### Parámetros de Entrada
 
-- N (int): Número de máquinas en uso.
-- S (int): Número de repuestos disponibles.
-- OP (int): Número de operarios disponibles.
+- N : Número de máquinas en uso.
+- S : Número de repuestos inicial.
+- OP : Número de operarios inicial.
 
 ### Variables Iniciales
 
 - **available = N + S**: Cajas disponibles.
-- **available_op = OP**: Operarios.
+- **available_op = OP**: Operarios disponibles.
 
 ### Cajas a Reparar:
 
@@ -58,16 +60,14 @@ Consiste en avanzar en eventos discretos de 2 tipos (ocurrió un desperfecto o s
 
 - **sim_time = 0**: Denota el paso del tiempo dentro de la simulación.
 
-### Inicialización de Tiempos de Reparación
+### Inicialización de Tiempos de Reparación y de Falla
 
 Para cada operario, se establece un tiempo de reparación infinito inicialmente:
 
     for _ in range(OP):
         repaired_moment.append(np.inf)
 
-#### Generación de Tiempos de Falla
-
-Se generan N tiempos exponenciales de falla para las máquinas en uso:
+De manera similar se generan N tiempos exponenciales de falla para las máquinas en uso:
 
     for _ in range(N):
         break_moment.append(-math.log(random()))
@@ -175,6 +175,6 @@ Al comparar los tres casos de estudio, se observan las siguientes característic
 
 ### Conclusión
 
-El análisis de los resultados muestra que, aunque el sistema con dos operarios y tres repuestos tiene el mayor tiempo de vida promedio, también presenta la mayor variabilidad. Esto podría traducirse en una mayor incertidumbre respecto al tiempo de vida del sistema. Por otro lado, el sistema con un operario y cuatro repuestos ofrece una mejora significativa en el tiempo de vida promedio en comparación con un solo operario y tres repuestos, con una variabilidad moderada.
+El análisis de los resultados muestra que, aunque el sistema con dos operarios y tres repuestos tiene el mayor tiempo de vida promedio, también presenta la mayor variabilidad. Esto se traduce en una mayor incertidumbre respecto al tiempo de vida del sistema, ya que hay casos donde se rompan 4 maquinas en tiempos proximos al principio de la simulacion puede cuasar que el tiempo de vida del sistema sea menor a 1 mes y a la vez hay casos cuando el las rupturas estan lo suficientemente distanciadas para que los operarios mantengan el paso y por lo tanto llegar a un tiempo de vida de hasta 30 meses. Por otro lado, el sistema con un operario y cuatro repuestos al tener una desviacion estandar menor nos da la capacidad de dar un intervalo mas acotado para el tiempo de vida que puede alcanzar el supermercado y por lo tanto la estimacion tendra mayor certezas.
 
-La elección del sistema óptimo dependerá de las prioridades del supermercado entre maximizar el tiempo de vida del sistema y minimizar la variabilidad e incertidumbre.
+Si nos guiaramos solo por el tiempo de vida promedio del sistema la mejor eleccion seria el sistema con 2 operarios. Pero al tener en cuenta la varianza que presentan los dos sistemas hace que la elección de añadir un operario o aumentar en uno los repuestos dependerá de las prioridades del supermercado entre maximizar el tiempo de vida del sistema que se puede llegar a alcanzar y minimizar la variabilidad e incertidumbre de la duracion.
