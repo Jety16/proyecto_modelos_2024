@@ -73,45 +73,53 @@ def statics(N,S,OP):
 
 casos_de_estudio = [[7,3,1], [7,3,2], [7,4,1]]
 results = []    # used for making the graph of the esperanza and desviación estandar
-xticks_values = [(16,1),(36,2),(24,1)]
+another_results = []    # used for making the histogram of the results
 i = 0
 for value in casos_de_estudio:
     esperanza, desviacion_estandar, sim_result = statics(*value)
     # This will graph the results of each simualtion
     plt.figure(figsize=(10, 6))
-    plt.hist(sim_result, bins=150, alpha=0.75, color='skyblue', edgecolor='black')
+    plt.hist(sim_result, bins=175, alpha=0.75, color='skyblue', edgecolor='black')
     plt.title(f'Histograma de Resultados con - N: {value[0]}, OP: {value[2]}, S: {value[1]}')
     plt.xlabel('Tiempo de Falla del Sistema en Meses')
     plt.ylabel('Frecuencia')
     plt.grid(True, which='both', linestyle='--', linewidth=0.5)
-    plt.xticks(range(0, xticks_values[i][0], xticks_values[i][1]))
+    plt.xticks(range(0, 32, 1))
     plt.show()
     i +=1
 
     # This will graph the esperanza and desviación estandar
     results.append({'N': value[0], 'S': value[1], 'OP': value[2], 'Media': esperanza, 'Desviación Estándar': desviacion_estandar})
+    another_results.append(sim_result)
 
+# Generate some sample data
+data = another_results
 
-df = pd.DataFrame(results)
-df['Label'] = df.apply(lambda row: f'OP: {row["OP"]}, S: {row["S"]}', axis=1)
+# Create a box plot
+plt.figure(figsize=(10, 6))
+plt.boxplot(data, patch_artist=True, vert=False,
+            boxprops=dict(facecolor='lightblue', color='black'),  # color of box and outline
+            whiskerprops=dict(color='black', linewidth=2),  # color and thickness of whiskers
+            capprops=dict(color='black', linewidth=2),  # color and thickness of caps
+            medianprops=dict(color='black', linewidth=2),  # color and thickness of median line
+            flierprops=dict(marker='o', markersize=6, markerfacecolor='red'))  # style of outliers)
 
-# Plotting
-fig, ax = plt.subplots(2, 1, figsize=(12, 10))
+# Customizing the plot
+plt.title('Comparación de los tiempos de falla del sistema en cada simulación')
+plt.xlabel('Tiempo de Falla del Sistema en Meses')
+plt.xticks(range(0, 36, 1))
+plt.ylabel('Casos de estudio: Operarios (OP) y Repuestos (S)')
+plt.yticks([1, 2, 3], ['OP: 1, S: 3', 'OP: 2, S: 3', 'OP: 1, S: 4'])
 
+# Add mean points and standard deviation lines
+for i in range(len(results)):
+    # Mean point
+    media_muestral = results[i]['Media']
+    desviacion_estandar = results[i]['Desviación Estándar']
 
-# Media plot
-df.plot(kind='bar', x='Label', y='Media', ax=ax[0], legend=False, color='skyblue')
-ax[0].set_title('Media de cada simulación')
-ax[0].set_ylabel('Tiempo de Falla del Sistema en Meses')
-ax[0].set_xlabel('Casos de estudio: Operarios (OP) y Repuestos (S)')
-ax[0].tick_params(axis='x', rotation=0)
+    # Standard deviation lines
+    plt.plot([media_muestral- desviacion_estandar , media_muestral + desviacion_estandar], [i + 1, i + 1], 'g-', linewidth=3)  # green line
+    plt.plot(media_muestral, i + 1,'b*', color = "purple", markersize=10)  # red star
 
-# Desviación Estándar plot
-df.plot(kind='bar', x='Label', y='Desviación Estándar', ax=ax[1], legend=False, color='orange')
-ax[1].set_title('Desviación Estándar de cada simulación')
-ax[1].set_ylabel('Tiempo de Falla del Sistema en Meses')
-ax[1].set_xlabel('Casos de estudio: Operarios (OP) y Repuestos (S)')
-ax[1].tick_params(axis='x', rotation=0)
-
-plt.tight_layout()
+# Display the plot
 plt.show()
