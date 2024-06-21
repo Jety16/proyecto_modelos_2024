@@ -1,4 +1,57 @@
 # Trabajo Práctico Especial - Sistema con operarios
+## Modelos y Simulación 2024
+### Fecha de entrega: 21 de junio de 2024
+
+### Integrantes:
+- Hubmann Tomas
+- Pereyra Carrillo Juan Cruz
+----------------------------------------
+## Índice
+
+1. **[Introducción](#introducción)**
+    - Contexto del problema
+    - Objetivos del trabajo
+
+2. **[Algoritmo y descripción de las Variables](#algoritmo-y-descripción-de-las-variables)**
+    - Constantes y variables utilizadas dentro del algoritmo
+    - Descripción de las variables
+    - Explicación del algoritmo
+
+3. **[Inicialización de Variables](#inicialización-de-variables)**
+    - Valores iniciales de las variables
+    - Inicialización de tiempos de reparación y de falla
+
+4. **[Bucle Principal de Simulación](#bucle-principal-de-simulación)**
+    - Lógica de ejecución del bucle principal
+    - Determinación de la próxima acción
+    - Manejo de eventos de falla
+    - Manejo de eventos de reparación
+    - Asignación de reparaciones
+
+5. **[Retorno del Resultado](#retorno-del-resultado)**
+    - Condiciones de finalización de la simulación
+    - Retorno del tiempo de simulación
+
+<div style="page-break-after: always;"></div>
+
+6. **[Resultados](#resultados)**
+    - Presentación de resultados para cada caso de estudio
+    - Caso de Estudio 1: 1 Operario, 7 Máquinas en Uso y 3 Repuestos
+    - Caso de Estudio 2: 2 Operarios, 7 Máquinas en Uso y 3 Repuestos
+    - Caso de Estudio 3: 1 Operario, 7 Máquinas en Uso y 4 Repuestos
+
+7. **[Análisis de los Resultados](#análisis-de-los-resultados)**
+    - Comparación de las métricas obtenidas
+    - Características generales de los casos de estudio
+    - Análisis de la esperanza, varianza y desviación estándar
+
+8. **[Conclusión](#conclusión)**
+    - Resumen de los hallazgos
+    - Recomendaciones basadas en los resultados obtenidos
+    - Consideraciones sobre la variabilidad e incertidumbre
+
+
+<div style="page-break-after: always;"></div>
 
 ## Introducción:
 En el presente trabajo se aborda la problemática de maximizar el tiempo de vida del sistema de cajas registradoras de un supermercado. Para ello se simularán los siguientes casos de estudio:
